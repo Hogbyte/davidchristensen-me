@@ -152,31 +152,35 @@
     }
 
     .project-body {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
       margin-bottom: 1rem;
     }
 
-    @media (min-width: 640px) {
-      .project-body {
-        grid-template-columns: 1fr 2fr 1.5fr;
-      }
+    .project-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
     }
 
-    .project-col h4 {
+    .project-row h4 {
+      flex-shrink: 0;
+      width: 100px;
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-muted);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0;
     }
 
-    .project-col p, .project-col ul {
+    .project-row p, .project-row ul {
+      flex: 1;
       font-size: 0.925rem;
+      margin: 0;
     }
 
-    .project-col ul {
+    .project-row ul {
       list-style-type: disc;
       padding-left: 1rem;
     }
@@ -333,11 +337,11 @@
           <div class="project-title">Frontend lead for a new compliance data model</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>A new compliance feature needed new statuses and new endpoints. The frontend and backend teams had different views of what the UI must read and write.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <ul>
               <li>Wrote the frontend technical analysis: endpoints, data types, statuses, and a nested feature-flag pattern. Split the work for 2 other engineers.</li>
@@ -345,7 +349,7 @@
               <li>Proposed a simpler data model shape and a clearer URL design. The backend team adopted both.</li>
             </ul>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>The final design kept my API contract and component structure. Some details changed in negotiation, which is how a shared contract should work.</p>
           </div>
@@ -361,11 +365,11 @@
           <div class="project-title">Testing federated micro-frontends inside a real host</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Our micro-frontends load inside other teams' pages through module federation, and nothing tested their integration. A dependabot dependency upgrade that I merged broke a shared viewer in 3 host products, while the synthetic monitors stayed green (they only checked that the remote was reachable).</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <ul>
               <li>Explained the failure and the monitor gap. Added a mandatory host check to our dependency-update process.</li>
@@ -373,7 +377,7 @@
               <li>Built a CircleCI workflow that runs each service's smoke tests against its UI preview branch and posts the result on the pull request.</li>
             </ul>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>That failure class is now caught before pull requests merge.</p>
           </div>
@@ -390,11 +394,11 @@
           <div class="project-title">Security certification and supply-chain hardening</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Required, audited programs: remove critical and high vulnerabilities, route dependencies through the company's artifact registry, and fix new findings within 14 days.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <ul>
               <li>Scoped the program and ran one-time remediation across 3 applications.</li>
@@ -403,7 +407,7 @@
               <li>Guided other teams in adopting this into their workflows.</li>
             </ul>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>All three programs are complete. The team moved from one-time cleanup to a daily automated check, and other teams asked to adopt the alerting.</p>
           </div>
@@ -420,11 +424,11 @@
           <div class="project-title">Compliance documents in the subcontractor invoice submission flow</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Subcontractors could not submit compliance documents as part of submitting an invoice.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <ul>
               <li>Owned multiple feature epics to completion, starting with an analysis of the existing behavior.</li>
@@ -432,7 +436,7 @@
               <li>Worked with the design team to ensure that error handling was handled in a way that met accessibility requirements.</li>
             </ul>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>Shipped to customers in increments.</p>
           </div>
@@ -449,15 +453,15 @@
           <div class="project-title">Async document generation</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Documents generate asynchronously. Two status APIs had different tradeoffs, and a wrong choice would spread an unstable contract to every document surface.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <p>Compared the two APIs and led the decision. Then I built one reusable generation-gate component and applied it to every document surface.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>One component in place of per-feature polling logic. A future contract/behavior changes touch one file.</p>
           </div>
@@ -473,15 +477,15 @@
           <div class="project-title">Incident command: a stalled production data pipeline</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>A Kafka sink between two products had stopped. The rest of my team was away and nobody had taken ownership.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <p>Took incident command, found the root cause in a configuration edge case, worked with the data platform team to resolve it, and ran the retro.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>The pipeline is running again, and the retro produced process changes.</p>
           </div>
@@ -497,15 +501,15 @@
           <div class="project-title">Shared compliance foundation and a reusable document viewer</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Compliance logic, types, and tables were copied across two applications, so each change was made twice. Our legacy document viewer was different from the platform's viewer.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <p>Moved our applications to the platform document viewer, built a shared foundation and table component, and helped another product team adopt our viewer.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>One implementation in place of two, and a component that another team now uses.</p>
           </div>
@@ -520,15 +524,15 @@
           <div class="project-title">AI agent skills for the team</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Repeated manual work: dependency-alert triage, deploy notes, and AI coding setup in each repository.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <p>Wrote Claude Code skills that fix dependency alerts, analyze each Dependabot pull request for merge safety, and turn deploy alerts into readable summaries. Added AI coding setup to the team's repositories.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>The analysis runs each weekday. The team lead chose it as the way to meet the 14-day fix target each sprint, and the on-call guide uses the skills.</p>
           </div>
@@ -544,18 +548,18 @@
           <div class="project-title">Scope checks that saved work</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Plans built on assumptions that nobody had checked.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <ul>
               <li>Tested across 3 applications and showed that a new region launch needed much less frontend work than expected.</li>
               <li>Traced an undocumented file-conversion pipeline across 4 systems in a spike and proof of concept, before anyone built a shallow version.</li>
             </ul>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>Sprint capacity went to the right work.</p>
           </div>
@@ -571,15 +575,15 @@
           <div class="project-title">Moving a payments frontend to micro-frontends</div>
         </div>
         <div class="project-body">
-          <div class="project-col">
+          <div class="project-row">
             <h4>Problem</h4>
             <p>Payments and compliance features lived in one legacy client, so no team could deploy on its own.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>What I Did</h4>
             <p>Helped bootstrap the payments React micro-frontend, helped create the compliance micro-frontend, and migrated the sub-tier experience into the lien-rights micro-frontend.</p>
           </div>
-          <div class="project-col">
+          <div class="project-row">
             <h4>Result</h4>
             <p>Each product area deploys on its own.</p>
           </div>
